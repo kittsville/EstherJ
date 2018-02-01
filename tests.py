@@ -1,36 +1,54 @@
 import unittest
 import estherj
 import StringIO
+import subprocess
 
 class TestEstherJ(unittest.TestCase):
-    def testSimpleConversion(self):
-        self._testWith('foo:"Bar"', '{"foo": "Bar"}')
-
-    def testComplexConversion(self):
-        input = """
+    simpleInput = 'foo:"Bar"'
+    simpleExpectedOutput = '{"foo": "Bar"}'
+    complexInput = """
 # A comment
 
 array: [
-    1
-    2
-    3
+1
+2
+3
 ]
 object:
     foo: 'bar'
     bux: 'poi'
-        """
-        expectedOutput = '{"array": [1, 2, 3], "object": {"bux": "poi", "foo": "bar"}}'
+"""
+    complexExpectedOutput = '{"array": [1, 2, 3], "object": {"bux": "poi", "foo": "bar"}}'
 
-        self._testWith(input, expectedOutput)
+    def testSimpleConversion(self):
+        self._callWith(self.simpleInput, self.simpleExpectedOutput)
 
-    def _testWith(self, input, expectedOutput):
-            output         = StringIO.StringIO()
+    def testComplexConversion(self):
+        self._callWith(self.complexInput, self.complexExpectedOutput)
 
-            estherj.convert(input, output)
+    def testSimpleShellConversion(self):
+        self._callUsingShellWith(self.simpleInput, self.simpleExpectedOutput)
 
-            outputText = output.getvalue()
+    def testComplexShellConversion(self):
+        self._callUsingShellWith(self.complexInput, self.complexExpectedOutput)
 
-            self.assertEquals(outputText, expectedOutput)
+    def _callUsingShellWith(self, inputText, expectedOutput):
+        p = subprocess.Popen(["python", "estherj.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        p.stdin.write(inputText.encode('ASCII')) # Convert to byte object
+        output = p.communicate()[0]
+        p.stdin.close()
+
+        self.assertEquals(output, expectedOutput)
+
+    def _callWith(self, inputText, expectedOutput):
+        input  = StringIO.StringIO(inputText)
+        output = StringIO.StringIO()
+
+        estherj.convert(input, output)
+
+        outputText = output.getvalue()
+
+        self.assertEquals(outputText, expectedOutput)
 
 
 if __name__ == '__main__':
