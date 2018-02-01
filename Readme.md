@@ -1,5 +1,7 @@
 # EstherJ
 
+[![Build Status](https://travis-ci.org/kittsville/EstherJ.svg?branch=master)](https://travis-ci.org/kittsville/EstherJ)
+
 Converts CSON to JSON using pycson.
 
 # Requirements
