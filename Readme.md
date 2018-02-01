@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/kittsville/EstherJ.svg?branch=master)](https://travis-ci.org/kittsville/EstherJ)
 
-Converts CSON to JSON using pycson.
+Converts CSON to JSON using [pycson](https://github.com/avakar/pycson).
 
 # Requirements
 
