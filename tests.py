@@ -4,15 +4,33 @@ import StringIO
 
 class TestEstherJ(unittest.TestCase):
     def testSimpleConversion(self):
-        input          = 'foo:"Bar"'
-        output         = StringIO.StringIO()
-        expectedOutput = '{"foo": "Bar"}'
+        self._testWith('foo:"Bar"', '{"foo": "Bar"}')
 
-        estherj.convert(input, output)
+    def testComplexConversion(self):
+        input = """
+# A comment
 
-        outputText = output.getvalue()
+array: [
+    1
+    2
+    3
+]
+object:
+    foo: 'bar'
+    bux: 'poi'
+        """
+        expectedOutput = '{"array": [1, 2, 3], "object": {"bux": "poi", "foo": "bar"}}'
 
-        self.assertEquals(outputText, expectedOutput)
+        self._testWith(input, expectedOutput)
+
+    def _testWith(self, input, expectedOutput):
+            output         = StringIO.StringIO()
+
+            estherj.convert(input, output)
+
+            outputText = output.getvalue()
+
+            self.assertEquals(outputText, expectedOutput)
 
 
 if __name__ == '__main__':
