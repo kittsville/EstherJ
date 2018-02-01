@@ -11,7 +11,7 @@ Converts CSON to JSON using pycson.
 # Installation
 
 1. Clone/download repo
-2. Install dependencies with `pip install -r reequirements.txt`
+2. Install dependencies with `pip install -r requirements.txt`
 
 # Usage
 
