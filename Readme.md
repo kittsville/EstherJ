@@ -15,12 +15,11 @@ Converts CSON to JSON using [pycson](https://github.com/avakar/pycson).
 
 # Usage
 
-Run from command line using stdin/stdout or import and call yourself:
+Run from command line using `python estherj.py foo.cson` (writes to stdout) or import and call yourself:
 
 ```python
 import estherj
 
-with open('foo.cson') as csonFile:
-  with open('bar.json', 'w+') as jsonFile:
-    estherj.convert(csonFile, jsonFile)
+with open('bar.json', 'w+') as jsonFile:
+  estherj.convert('foo.cson', jsonFile)
 ```
