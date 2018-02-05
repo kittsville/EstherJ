@@ -21,6 +21,11 @@ class TestEstherJ(unittest.TestCase):
     def testComplexShellConversion(self):
         self._callUsingShellWith(self.complexInputPath, self.complexExpectedOutput)
 
+    def testShellErrorWithoutFilepath(self):
+        child = subprocess.Popen(["python", "estherj.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        child.communicate()
+        self.assertNotEquals(child.returncode, 0)
+
     def _callUsingShellWith(self, inputPath, expectedOutput):
         output = subprocess.check_output(["python", "estherj.py", inputPath])
 
