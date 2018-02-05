@@ -20,6 +20,7 @@ Run from command line using `python estherj.py foo.cson` (writes to stdout) or i
 ```python
 import estherj
 
-with open('bar.json', 'w+') as jsonFile:
-  estherj.convert('foo.cson', jsonFile)
+with open('foo.cson') as csonFile:
+  with open('bar.json', 'w+') as jsonFile:
+    estherj.convert(csonFile, jsonFile)
 ```
