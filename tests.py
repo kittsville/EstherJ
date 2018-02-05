@@ -23,7 +23,8 @@ class TestEstherJ(unittest.TestCase):
 
     def testShellErrorWithoutFilepath(self):
         child = subprocess.Popen(["python", "estherj.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        child.communicate()
+        errorMessage = child.communicate()[1]
+        self.assertTrue("TypeError" in errorMessage)
         self.assertNotEquals(child.returncode, 0)
 
     def _callUsingShellWith(self, inputPath, expectedOutput):
